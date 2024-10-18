@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
 
-  njs-stress-test-open:
+  njs-stress-test:
     build:
       context: .
       dockerfile: ./njs/Dockerfile
@@ -17,9 +17,9 @@ services:
       resources:
         limits:
           cpus: '1'
-          memory: 50M
+          memory: 500M
 
-  nodejs-stress-test-open:
+  nodejs-stress-test:
     build:
       context: .
       dockerfile: ./nodejs/Dockerfile
@@ -34,41 +34,7 @@ services:
       resources:
         limits:
           cpus: '1'
-          memory: 50M
-
-  njs-stress-test-slim:
-    build:
-      context: .
-      dockerfile: ./njs/Dockerfile
-    environment:
-      USER_FETCH_URL: 'http://nginx:80'
-      SECRETS: '{"mysupersecretkey":"123123123"}'
-    volumes:
-      - .:/app
-    ports:
-      - "8018:8008"
-    deploy:
-      resources:
-        limits:
-          cpus: '0.25'
-          memory: 50M
-
-  nodejs-stress-test-slim:
-    build:
-      context: .
-      dockerfile: ./nodejs/Dockerfile
-    environment:
-      USER_FETCH_URL: 'http://nginx:80'
-      SECRETS: '{"mysupersecretkey":"123123123"}'
-    volumes:
-      - .:/app
-    ports:
-      - "3013:3003"
-    deploy:
-      resources:
-        limits:
-          cpus: '0.25'
-          memory: 50M
+          memory: 500M
 
   fake-oauth:
     image: acando14/fake-oauth2

@@ -72,14 +72,16 @@ Where the test is executed:
 * Machine type: e2-medium - 2vCPU - 4GB Ram
 * Architecture: x86/64
 
-Server to be exposed for testing in order to restit to high load is running `python3 -m http.server 9000`
-
 
 We create 4 environments:
 * NJS-open (NGINX with ngx_http_js_module.so) with hegh resource limits
 * Node-open (Node.js) without resource limits
 * NJS-slim (NGINX with ngx_http_js_module.so) with 0,25 CPU and 50MB RAM
 * Node-slim (Node.js) with 0,25 CPU and 50MB RAM
+
+Docker used to running all systems:
+* fake-oauth: Fake OAuth2 server to generate valid JWT
+* nginx: stock NGINX image only to serve 200 status on high load
 
 We test with this locust configuration:
 * Low load
@@ -105,40 +107,4 @@ Run locust:
 locust -f stresstest/locustfile.py
 ```
 
-## Highlights NJS-open
 
-### Low load
-| Type | Name             | # Requests | # Fails | Median (ms) | 95%ile (ms) | 99%ile (ms) | Average (ms) | Min (ms) | Max (ms) | Average size (bytes) | Current RPS | Current Failures/s |
-|------|------------------|------------|---------|-------------|-------------|-------------|--------------|----------|----------|----------------------|-------------|---------------------|
-| GET  | /hello           | 1608       | 0       | 3           | 7           | 9           | 3.73         | 1        | 34       | 0                    | 7.6         | 0                   |
-| GET  | /secret          | 3272       | 0       | 9           | 23          | 46          | 13.11        | 3        | 1494     | 32                   | 14.1        | 0                   |
-| Aggregated |            | 4904       | 2       | 7           | 21          | 36          | 10.14        | 1        | 1494     | 25.18                | 21.7        | 0                   |
-![njs-open-low.png](imgs/njs-open-low.png)
-
-
-### High load
-| Type       | Name             | # Requests | # Fails | Median (ms) | 95%ile (ms) | 99%ile (ms) | Average (ms) | Min (ms) | Max (ms) | Average size (bytes) | Current RPS | Current Failures/s |
-|------------|------------------|------------|---------|-------------|-------------|-------------|--------------|----------|----------|----------------------|-------------|---------------------|
-| GET        | /hello           | 57113      | 37551   | 2           | 13          | 39          | 83.09        | 1        | 25941    | 0                    | 658         | 658                 |
-| GET        | /secret          | 115236     | 75728   | 2           | 28          | 190         | 90.24        | 1        | 25942    | 10.97                | 1328        | 1328                |
-| Aggregated |                  | 172379     | 113279  | 2           | 22          | 130         | 87.88        | 1        | 25942    | 7.5                  | 1986        | 1986                |
-![njs-open-extreme.png](imgs/njs-open-extreme.png)
-
-
-## Highlights NJS-slim
-
-### Low load
-| Type       | Name    | # Requests | # Fails | Median (ms) | 95%ile (ms) | 99%ile (ms) | Average (ms) | Min (ms) | Max (ms) | Average size (bytes) | Current RPS | Current Failures/s |
-|------------|---------|------------|---------|-------------|-------------|-------------|--------------|----------|----------|----------------------|-------------|---------------------|
-| GET        | /hello  | 974        | 0       | 4           | 7           | 8           | 3.84         | 1        | 18       | 0                    | 7.4         | 0                   |
-| GET        | /secret | 1937       | 0       | 11          | 26          | 51          | 15.3         | 4        | 1541     | 32                   | 11.7        | 0                   |
-| Aggregated |         | 2911       | 0       | 8           | 22          | 37          | 11.46        | 1        | 1541     | 21.29                | 19.1        | 0                   |
-![njs-slim-low.png](imgs/njs-slim-low.png)
-
-### High load
-| Type       | Name             | # Requests | # Fails | Median (ms) | 95%ile (ms) | 99%ile (ms) | Average (ms) | Min (ms) | Max (ms) | Average size (bytes) | Current RPS | Current Failures/s |
-|------------|------------------|------------|---------|-------------|-------------|-------------|--------------|----------|----------|----------------------|-------------|---------------------|
-| GET        | /hello           | 33752      | 15541   | 5           | 77          | 160         | 153.58       | 1        | 25943    | 0                    | 384.4       | 384.4               |
-| GET        | /secret          | 67691      | 30816   | 11          | 150         | 580         | 170.5        | 1        | 25945    | 17.43                | 757.9       | 757.9               |
-| Aggregated |                  | 101473     | 46357   | 8           | 130         | 470         | 164.88       | 1        | 25945    | 11.9                 | 1142.3      | 1142.3              |
-![njs-slim-extreme.png](imgs/njs-slim-extreme.png)
