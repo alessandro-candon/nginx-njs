@@ -38,3 +38,8 @@ services:
     image: acando14/fake-oauth2
     ports:
       - "8080:8080"
+
+  logger:
+    image: acando14/logger-server:latest
+    ports:
+      - "8099:8099"
