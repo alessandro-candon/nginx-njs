@@ -7,7 +7,7 @@ services:
       context: .
       dockerfile: ./njs/Dockerfile
     environment:
-      USER_FETCH_URL: 'http://0.0.0.0:9000'
+      USER_FETCH_URL: 'http://localhost:9000'
       SECRETS: '{"mysupersecretkey":"123123123"}'
     volumes:
       - .:/app
@@ -24,7 +24,7 @@ services:
       context: .
       dockerfile: ./nodejs/Dockerfile
     environment:
-      USER_FETCH_URL: 'http://0.0.0.0:9000'
+      USER_FETCH_URL: 'http://localhost:9000'
       SECRETS: '{"mysupersecretkey":"123123123"}'
     volumes:
       - .:/app
@@ -41,7 +41,7 @@ services:
       context: .
       dockerfile: ./njs/Dockerfile
     environment:
-      USER_FETCH_URL: 'http://0.0.0.0:9000'
+      USER_FETCH_URL: 'http://localhost:9000'
       SECRETS: '{"mysupersecretkey":"123123123"}'
     volumes:
       - .:/app
@@ -58,7 +58,7 @@ services:
       context: .
       dockerfile: ./nodejs/Dockerfile
     environment:
-      USER_FETCH_URL: 'http://0.0.0.0:9000'
+      USER_FETCH_URL: 'http://localhost:9000'
       SECRETS: '{"mysupersecretkey":"123123123"}'
     volumes:
       - .:/app
