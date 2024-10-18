@@ -75,7 +75,7 @@ services:
     ports:
       - "8080:8080"
 
-  logger:
-    image: acando14/logger-server:latest
+  nginx:
+    image: nginx:alpine
     ports:
-      - "8099:8099"
+      - "8099:80"
