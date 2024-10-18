@@ -72,6 +72,8 @@ Where the test is executed:
 * Machine type: e2-medium - 2vCPU - 4GB Ram
 * Architecture: x86/64
 
+Server to be exposed for testing in order to restit to high load is running `python3 -m http.server 9000`
+
 
 We create 4 environments:
 * NJS-open (NGINX with ngx_http_js_module.so) with hegh resource limits
