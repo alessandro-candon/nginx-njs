@@ -1,6 +1,11 @@
 # Auth SPA for secrets
 
-Try to allow download "secrets" like x-api-keys for SPA only for auth users.
+This Proof of Concept (POC) involves setting up a test environment using NGINX and Node.js as web servers to serve a Single Page Application (SPA). 
+The POC aims to validate the configuration and functionality for securely serving the SPA and providing access to certain sensitive information ("secrets") 
+that the SPA requires for its operation, such as an x-api-key. 
+The POC involves using NGINX with the `ngx_http_js_module.so` module and a Node.js service to validate fetching 
+user information using JWT authentication and serving "secrets" securely.
+
 
 ## DISCLAIMER : NOT USE THIS TO STORE CRITICAL SECRETS LIKE PASSWORDS, KEYS, ETC.
 XApiKeys in SPA are used only to identify the application that is using the backend. 
@@ -8,7 +13,6 @@ BackEnd or APIGateway should validate the key and jwt, allowing or deny the requ
 
 
 ## What is this test consists of?
-
 The Proof of Concept (POC) consists of setting up a test environment using NGINX and Node.js as web servers to serve a 
 Single Page Application (SPA). 
 The POC aims to validate the configuration and functionality for securely serving the SPA and providing access to certain
